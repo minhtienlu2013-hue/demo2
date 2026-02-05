@@ -1,11 +1,21 @@
 const questions = [
     {
-        question: "Which is the biggest continent in the world?",
+    question: "Last Sunday, Maria didn’t _________ up late.",
+       image: "image/1.jpg",
         answers: [
-            { text: "A. Asia", correct: true},
-            { text: "B. America", correct: false},
-            { text: "C. Africa", correct: false},
-            { text: "D. Antartica", correct: false},
+            { text: "A. waked", correct: true},
+            { text: "B. wakes", correct: false},
+            { text: "C. was walking", correct: false},
+            { text: "D. were walking", correct: false},
+        ]
+    },
+    {
+        question: "I am keen on ____________. But my dad is interested in ______________ coins.",
+        answers: [
+            { text: "A. Antartica", correct: false},
+            { text: "B. singing / collected", correct: false},
+            { text: "C. sang / collection", correct: false},
+            { text: "D. singing / collecting", correct: true},
         ]
     },
     {
@@ -37,6 +47,13 @@ function showQuestion(){
     let questionNo = currentQuestionIndex + 1;
     questionElement.innerHTML = questionNo + ". " + currentQuestion.
     question;
+    const imgElement = document.getElementById("question-image"); 
+    if(currentQuestion.image){
+        imgElement.src = currentQuestion.image;
+        imgElement.style.display = "block"; // Hiện ảnh
+    } else {
+        imgElement.style.display = "none"; // Ẩn ảnh nếu câu đó không có
+    }
 
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
