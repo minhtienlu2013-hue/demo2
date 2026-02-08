@@ -140,7 +140,7 @@ function handleNextButton(){
 }
 
 homeButton.addEventListener("click", ()=>{
-    window.location.href = "trangchu.html";
+    window.location.href = "index.html";
 })
 
 nextButton.addEventListener("click", ()=>{
@@ -152,4 +152,5 @@ nextButton.addEventListener("click", ()=>{
 });
 
 startQuiz();
+
 
