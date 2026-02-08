@@ -2,13 +2,19 @@
 <html>
     <head>
         <title> Quiz</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel=" stylesheet" href="style.css">
+
     </head>
     <body>
+        <div class="timer-container" style="width: 100%; background: #eee; height: 10px; border-radius: 5px; margin-bottom: 20px;">
+    <div id="time-line" style="width: 100%; background: #67ffa1; height: 100%; border-radius: 5px; transition: width 1s linear;"></div>
+</div>
        <div class="app">
        <h1>simple quiz</h1> 
        <div class="quiz">
         <h2 id="question">Question goes here</h2>
+        <audio id="question-audio" controls style="display: none; margin: 20px auto;"></audio>
         <img id="question-image" src="" style="width: 100%; max-width: 300px; margin: 10px auto; display: none;">
         <div id="answer-buttons">
             <button class="btn">Answer 1</button>

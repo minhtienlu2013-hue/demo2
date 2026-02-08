@@ -11,6 +11,7 @@ const questions = [
     },
     {
         question: "I am keen on ____________. But my dad is interested in ______________ coins.",
+        audio: "2.wav",
         answers: [
             { text: "A. Antartica", correct: false},
             { text: "B. singing / collected", correct: false},
@@ -33,6 +34,9 @@ const nextButton = document.getElementById("next-btn");
 const homeButton = document.getElementById("home-btn");
 let currentQuestionIndex = 0;
 let score = 0;
+let timer; // Bộ đếm
+let timeValue = 15; // Mỗi câu có 15 giây
+const timeLine = document.getElementById("time-line");
 
 function startQuiz(){
     currentQuestionIndex = 0;
@@ -47,6 +51,9 @@ function showQuestion(){
     let questionNo = currentQuestionIndex + 1;
     questionElement.innerHTML = questionNo + ". " + currentQuestion.
     question;
+    clearInterval(timer); // Xóa bộ đếm cũ của câu trước
+    timeLine.style.width = "100%"; // Trả thanh Timeline về đầy 100%
+    startTimer(15); // Bắt đầu đếm ngược 15 giây mới
     const imgElement = document.getElementById("question-image"); 
     if(currentQuestion.image){
         imgElement.src = currentQuestion.image;
@@ -54,7 +61,15 @@ function showQuestion(){
     } else {
         imgElement.style.display = "none"; // Ẩn ảnh nếu câu đó không có
     }
-
+    
+    const audioElement = document.getElementById("question-audio");
+    if(currentQuestion.audio) {
+        audioElement.src = currentQuestion.audio;
+        audioElement.style.display = "block"; // Hiện trình phát nhạc
+        // audioElement.play(); // Nếu muốn tự động phát khi sang câu mới
+    } else {
+        audioElement.style.display = "none"; // Ẩn nếu không có audio
+    }
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
         button.innerHTML = answer.text;
@@ -74,6 +89,7 @@ function resetState(){
     }
 }
 function selectAnswer(e){
+    clearInterval(timer);
     const selectedBtn = e.target;
     const isCorrect = selectedBtn.dataset.correct === "true";
     if(isCorrect){
@@ -100,7 +116,20 @@ function showScore(){
     homeButton.innerHTML = "Homepage";
     homeButton.style.display = "block";
 }
+function startTimer(time) {
+    timer = setInterval(timerFunction, 1000); // Cứ 1 giây chạy 1 lần
 
+    function timerFunction() {
+        time--; // Trừ đi 1 giây
+        let widthValue = (time / 15) * 100; // Tính % chiều dài còn lại
+        timeLine.style.width = widthValue + "%";
+
+        if (time <= 0) { // Nếu hết giờ
+            clearInterval(timer); // Dừng bộ đếm
+            handleNextButton(); // Tự động chuyển câu hoặc báo hết giờ
+        }
+    }
+}
 function handleNextButton(){
     currentQuestionIndex++;
     if(currentQuestionIndex < questions.length){
@@ -111,7 +140,7 @@ function handleNextButton(){
 }
 
 homeButton.addEventListener("click", ()=>{
-    window.location.href = "index.html";
+    window.location.href = "trangchu.html";
 })
 
 nextButton.addEventListener("click", ()=>{
